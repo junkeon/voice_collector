@@ -7,16 +7,16 @@ import Typography from '@material-ui/core/Typography';
 import { Grid, IconButton, Toolbar } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MicIcon from '@material-ui/icons/Mic';
 
 const useStyles = makeStyles({
   card: {
     position: 'absolute',
-    top: "50%",
+    top: "40%",
     left: "50%",
-    transform: "translateY(-50%) translateX(-50%)",
+    transform: "translateY(-40%) translateX(-50%)",
 
     width: 600,
     height: 600,
@@ -44,8 +44,8 @@ const useStyles = makeStyles({
     height: 340,
   },
   index: {
-    paddingRight: 20,
-    paddingTop: 20,
+    paddingRight: 10,
+    paddingTop: 10,
     textAlign: "right",
     color: "#757381",
   },
@@ -75,6 +75,9 @@ const useStyles = makeStyles({
     transform: "translateY(-50%)",
     color: "#737373"
   },
+  waveform : {
+
+  },
   control: {
     marginTop: 30,
     height: 60,
@@ -93,7 +96,7 @@ export default function SimpleCard() {
 
   return (
     <Card className={classes.card}>
-      <AppBar className={classes.appbar} elevation={0} >
+      <AppBar className={classes.appbar} elevation={1} >
         <Toolbar className={classes.toolbar}>
           <IconButton color="inherit" aria-label="List">
             <ListIcon fontSize="large" />
@@ -113,7 +116,7 @@ export default function SimpleCard() {
           </div>
           <div className={classes.parSentence}>
             <div className={classes.sentence}>
-              <Typography variant="h4">간장공장 공장장은 장 공장장이고,</Typography>
+              <Typography variant="h4">간장 공장 공장장은 장 공장장이고,</Typography>
               <Typography variant="h4">된장 공장 공장장은 간 공장장이다.</Typography>
             </div>
           </div>
@@ -121,18 +124,18 @@ export default function SimpleCard() {
             <div className={classes.status}>
               <Typography variant="h4">Ready to record</Typography>
             </div>
-            <div></div>
+            <div className={classes.waveform}></div>
           </div>
           <div className={classes.control}>
             <Grid container spacing={2}>
-              <Grid item xs className={classes.grid}>
-                <IconButton><ArrowBackIosIcon fontSize="large" style={{ color: "#757381" }} /></IconButton>
+            <Grid item xs className={classes.grid}>
+                <IconButton><ChevronLeftIcon fontSize="large" style={{ color: "#757381" }} /></IconButton>
               </Grid>
               <Grid item xs className={classes.grid}>
                 <IconButton><MicIcon fontSize="large" style={{ color: "#757381" }} /></IconButton>
               </Grid>
               <Grid item xs className={classes.grid}>
-                <IconButton><ArrowForwardIosIcon fontSize="large" style={{ color: "#757381" }} /></IconButton>
+                <IconButton><ChevronRightIcon fontSize="large" style={{ color: "#757381" }} /></IconButton>
               </Grid>
             </Grid>
           </div>
