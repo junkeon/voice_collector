@@ -8,13 +8,13 @@ import NavBar from './components/NavBar'
 import Record from './components/RecordDiv'
 
 export default function SimpleCard() {
-  const classes = useStyles();
-
+  const classes = useStyles();  
+  
   return (
     <Card className={classes.card}>
       <NavBar classes={classes} />
       <CardContent className={classes.cardContent}>
-        <Record classes={classes} />
+        <Record classes={classes}/>
       </CardContent>
     </Card>
   );

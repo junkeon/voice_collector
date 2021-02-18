@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     position: "relative",
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 40,
+    marginTop: 30,
     height: 340,
   },
   index: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     color: "#757381",    
   },
   parSentence: {
-    height: 160,
+    height: 200,
     borderTop: "5px solid #757381",
     borderBottom: "5px solid #757381",
     marginTop: 10,
@@ -70,16 +70,19 @@ const useStyles = makeStyles({
     top: "50%",
     transform: "translateY(-50%)",
     color: "#737373"
-
   },
   waveform : {
-
+    position: 'relative',
+    width: "90%",
+    top: "50%",
+    left: "50%",
+    transform: "translateY(-50%) translateX(-50%)",
+    color: "#ffffff"
   },
   control: {
-    marginTop: 30,
+    marginTop: 10,
     height: 60,
     flexGrow: 1,
-
   },
   grid: {
     position: 'relative',
