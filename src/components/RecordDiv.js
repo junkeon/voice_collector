@@ -8,7 +8,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import { useReactMediaRecorder } from "react-media-recorder";
 import WaveSurfer from "wavesurfer.js";
 
-function Record({ classes, sentList, setSentList, index, setIndex }) {
+function Record({ classes, sentList, setSentList, index, setIndex, user }) {
 
     const media = useReactMediaRecorder({ audio: true, onStop: (a, b) => { setblob(b) } })
     const [text, setText] = useState('')
@@ -29,7 +29,7 @@ function Record({ classes, sentList, setSentList, index, setIndex }) {
 
     useEffect(() => {
         if (waveformRef.current && blob !== '') {
-            blobToBase64(blob);
+            blobToBase64(blob);            
             const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
                 waveColor: 'blue',
@@ -53,7 +53,7 @@ function Record({ classes, sentList, setSentList, index, setIndex }) {
             var check = window.confirm('음성 인식 결과 : \n' + text)
             if (check) {
                 setSentList(sentList.map(item => item.id === index ? { ...item, done: true } : item))
-                changeSent('+')
+                changeSent('+')                
             }
         }
         setStatusMSG("Ready to record")
@@ -82,6 +82,7 @@ function Record({ classes, sentList, setSentList, index, setIndex }) {
             var dataUrl = reader.result;
             var base64 = dataUrl.split(',')[1];
             sendToOffline(base64);
+            getScript(base64, index, user, sentList[index].text)
         };
         reader.readAsDataURL(blob);
     };
@@ -102,6 +103,26 @@ function Record({ classes, sentList, setSentList, index, setIndex }) {
 
         fetch(recipeUrl, requestMetadata).then(res => res.json()).then(res => setText(res.text))
     }
+
+    function getScript(b64data, index, user, scp) {
+        const recipeUrl = "http://0.0.0.0:5024/send_audio"
+        const postBody = {
+          'user': user,
+          'blob': b64data,
+          'index' : index,
+          'sent' : scp,
+        }
+        const requestMetadata = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postBody)
+        };
+    
+        fetch(recipeUrl, requestMetadata)
+        .then(res => res.json())
+      }
 
     function record() {
         if (recBtn) {

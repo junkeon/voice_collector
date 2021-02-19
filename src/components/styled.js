@@ -105,7 +105,29 @@ const useStyles = makeStyles({
     textAlign:'center',
     fontSize:30,
     color:'#363488',
-  }
+  },
+  loginContent: {
+    position: "relative",
+    marginLeft: 100,
+    marginRight: 100,
+    marginTop: 100,
+    textAlign:"center",
+  },
+  loginInput: {
+    display: "block",
+    marginBottom: 30,
+    width: "100%",
+    height: 30,
+    
+    padding: 10,
+    border: 'none',
+    borderBottom: "1px solid #eaeaea",
+    color: "#757575",
+
+    '&:focus': {
+      outline: "none"
+    }
+ }
 });
 
 export default useStyles

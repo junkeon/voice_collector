@@ -5,11 +5,11 @@ import { IconButton, Toolbar, AppBar, Typography } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-function NavBar({ classes, onClick }) {
+function NavBar({ classes, onClick, listBtn }) {
     return (
         <AppBar className={classes.appbar} elevation={1} >
             <Toolbar className={classes.toolbar}>
-                <IconButton color="inherit" aria-label="List" onClick={onClick}>
+                <IconButton color="inherit" aria-label="List" onClick={onClick} disabled={listBtn}>
                     <ListIcon fontSize="large" />
                 </IconButton>
                 <div className={classes.barTitle}>
