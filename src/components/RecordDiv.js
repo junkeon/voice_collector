@@ -8,7 +8,7 @@ import MicIcon from '@material-ui/icons/Mic';
 import { useReactMediaRecorder } from "react-media-recorder";
 import WaveSurfer from "wavesurfer.js";
 
-function Record({ classes, sentList, setSentList, index, setIndex, user }) {
+function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, user }) {
 
     const media = useReactMediaRecorder({ audio: true, onStop: (a, b) => { setblob(b) } })
     const [text, setText] = useState('')
@@ -29,7 +29,7 @@ function Record({ classes, sentList, setSentList, index, setIndex, user }) {
 
     useEffect(() => {
         if (waveformRef.current && blob !== '') {
-            blobToBase64(blob);            
+            blobToBase64(recipeUrl, blob);            
             const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
                 waveColor: 'blue',
@@ -75,14 +75,14 @@ function Record({ classes, sentList, setSentList, index, setIndex, user }) {
         }
     }, [index])
 
-    function blobToBase64(blob) {
+    function blobToBase64(recipeUrl, blob) {
         console.log('Connect to server...')
         var reader = new FileReader();
         reader.onload = function () {
             var dataUrl = reader.result;
             var base64 = dataUrl.split(',')[1];
             sendToOffline(base64);
-            getScript(base64, index, user, sentList[index].text)
+            getScript(recipeUrl, base64, index, user, sentList[index].text)
         };
         reader.readAsDataURL(blob);
     };
@@ -104,8 +104,7 @@ function Record({ classes, sentList, setSentList, index, setIndex, user }) {
         fetch(recipeUrl, requestMetadata).then(res => res.json()).then(res => setText(res.text))
     }
 
-    function getScript(b64data, index, user, scp) {
-        const recipeUrl = "http://0.0.0.0:5024/send_audio"
+    function getScript(recipeUrl, b64data, index, user, scp) {
         const postBody = {
           'user': user,
           'blob': b64data,
@@ -120,7 +119,7 @@ function Record({ classes, sentList, setSentList, index, setIndex, user }) {
           body: JSON.stringify(postBody)
         };
     
-        fetch(recipeUrl, requestMetadata)
+        fetch(recipeUrl + '/send_audio', requestMetadata)
         .then(res => res.json())
       }
 

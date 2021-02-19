@@ -117,7 +117,7 @@ const useStyles = makeStyles({
     display: "block",
     marginBottom: 30,
     width: "100%",
-    height: 30,
+    height: 50,
     
     padding: 10,
     border: 'none',
