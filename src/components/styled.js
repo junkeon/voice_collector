@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     position: "relative",
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 30,
+    marginTop: 20,
     height: 340,
   },
   index: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     color: "#757381",    
   },
   parSentence: {
-    height: 200,
+    height: 230,
     borderTop: "5px solid #757381",
     borderBottom: "5px solid #757381",
     marginTop: 10,
@@ -58,11 +58,10 @@ const useStyles = makeStyles({
     transform: "translateY(-50%)",
   },
   visual: {
-    position: 'relative',
+    // position: 'relative',
     textAlign: "center",
-    height: 130,
-    marginTop: 10,
-    // backgroundColor:'#334455'
+    height: 120,
+    // marginTop: 10,
   },
   status: {
     position: 'relative',
@@ -74,10 +73,11 @@ const useStyles = makeStyles({
   waveform : {
     position: 'relative',
     width: "90%",
+    height: "100%",
     top: "50%",
     left: "50%",
     transform: "translateY(-50%) translateX(-50%)",
-    color: "#ffffff"
+    // backgroundColor: "#ffffff"
   },
   control: {
     marginTop: 10,
@@ -91,6 +91,20 @@ const useStyles = makeStyles({
   },
   controlBtn: {
     color: "#757381"
+  },
+  listContent: {
+    position: "relative",
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 20,
+    height: 440,
+    overflow: "auto",
+  },
+  subheader: {
+    backgroundColor:'white',
+    textAlign:'center',
+    fontSize:30,
+    color:'#363488',
   }
 });
 
