@@ -6,6 +6,7 @@ app = Flask(__name__, static_folder='../voice-collector/build', static_url_path=
 CORS(app, support_credentials=True)
 
 target_dir = './audio'
+os.makedirs(target_dir, exist_ok=True)
 
 @app.route('/')
 def index():

@@ -22,7 +22,8 @@ export default function SimpleCard() {
   const [userInfo, setUserInfo] = useState({ user: '', passwd: '' })
   const { user, passwd } = userInfo
 
-  const recipeUrl = "http://192.168.153.20:5024/"
+  // const recipeUrl = "http://192.168.153.20:5024/"
+  const recipeUrl = "http://0.0.0.0:5024/"
 
   function onClick() {
     if(user.length === 0 || passwd !== '1234'){

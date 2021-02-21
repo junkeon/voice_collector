@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Input, Typography } from '@material-ui/core';
 
-function Login({ classes, user, passwd, userInfo, setUserInfo, onClick}) {    
+function Login({ classes, user, passwd, userInfo, setUserInfo, onClick }) {
 
     const onChange = e => {
         const { name, value } = e.target
@@ -12,7 +12,14 @@ function Login({ classes, user, passwd, userInfo, setUserInfo, onClick}) {
     }
 
     return (
-        <div className={classes.loginContent}>
+        <div className={classes.loginContent}
+            tabIndex={0}
+            onKeyDown={
+                e => {
+                    if (e.key === 'Enter') {
+                        onClick()
+                    }
+                }}>
             <Typography variant="h4" style={{ marginBottom: 30 }}>Login to your account</Typography>
             <form>
                 <Input type="text"
@@ -22,10 +29,10 @@ function Login({ classes, user, passwd, userInfo, setUserInfo, onClick}) {
                     value={user}
                     onChange={onChange} />
                 <Input type="password"
-                name="passwd"
+                    name="passwd"
                     placeholder="password"
                     className={classes.loginInput}
-                    value={passwd} 
+                    value={passwd}
                     onChange={onChange} />
                 <Button variant="contained"
                     color="primary"

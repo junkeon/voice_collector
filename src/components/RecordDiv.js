@@ -15,6 +15,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
     const [recBtn, setRecBtn] = useState(true)
 
     const waveformRef = useRef();
+    const recMain = useRef();
     const [blob, setblob] = useState('');
 
     const [decBtnState, setDecState] = useState({ 'color': 'disabled', 'disabled': true })
@@ -29,7 +30,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
 
     useEffect(() => {
         if (waveformRef.current && blob !== '') {
-            blobToBase64(recipeUrl, blob);            
+            blobToBase64(recipeUrl, blob);
             const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
                 waveColor: 'blue',
@@ -53,7 +54,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
             var check = window.confirm('음성 인식 결과 : \n' + text)
             if (check) {
                 setSentList(sentList.map(item => item.id === index ? { ...item, done: true } : item))
-                changeSent('+')                
+                changeSent('+')
             }
         }
         setStatusMSG("Ready to record")
@@ -106,22 +107,22 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
 
     function getScript(recipeUrl, b64data, index, user, scp) {
         const postBody = {
-          'user': user,
-          'blob': b64data,
-          'index' : index,
-          'sent' : scp,
+            'user': user,
+            'blob': b64data,
+            'index': index,
+            'sent': scp,
         }
         const requestMetadata = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(postBody)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postBody)
         };
-    
+
         fetch(recipeUrl + '/send_audio', requestMetadata)
-        .then(res => res.json())
-      }
+            .then(res => res.json())
+    }
 
     function record() {
         if (recBtn) {
@@ -147,8 +148,6 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
             } else {
                 setIncState({ 'color': 'inherit', 'state': false })
             }
-
-
         }
         setRecBtn(!recBtn);
     }
@@ -167,10 +166,22 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
         setStatusMSG('Ready to record')
         setStatusVis('block')
         setWavVis('none')
-    }
+    }    
 
     return (
-        <div className={classes.content}>
+        <div className={classes.content}
+            ref={recMain}
+            tabIndex={0}
+            onKeyDown={
+                e => {
+                    if(e.key === 'ArrowLeft'){
+                        changeSent('-')
+                    } else if(e.key === 'ArrowRight'){
+                        changeSent('+')
+                    } else if(e.key === ' '){
+                        record()
+                    }
+                }}>
             <div className={classes.index}>
                 <Typography variant="h5">
                     {sentList[index].done ? 'Done - ' : 'Undone - '}
@@ -180,7 +191,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
             <div className={classes.parSentence}>
                 <div className={classes.sentence}>
                     {sentList[index].text.split('\n').map((line, idx) => {
-                        return <Typography key={idx} variant="h4" style={{paddingTop:7, paddingBottom : 7}}>{line}</Typography>
+                        return <Typography key={idx} variant="h4" style={{ paddingTop: 7, paddingBottom: 7 }}>{line}</Typography>
                     })}
                 </div>
             </div>
