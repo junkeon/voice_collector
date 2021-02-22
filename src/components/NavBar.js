@@ -5,11 +5,11 @@ import { IconButton, Toolbar, AppBar, Typography } from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 
-function NavBar({ classes, onClick, listBtn }) {
+function NavBar({ classes }) {
     return (
         <AppBar className={classes.appbar} elevation={1} >
             <Toolbar className={classes.toolbar}>
-                <IconButton color="inherit" aria-label="List" onClick={onClick} disabled={listBtn}>
+                <IconButton color="inherit" aria-label="List" >
                     <ListIcon fontSize="large" />
                 </IconButton>
                 <div className={classes.barTitle}>
@@ -17,7 +17,7 @@ function NavBar({ classes, onClick, listBtn }) {
                         Voice Collector
                     </Typography>
                 </div>
-                <IconButton color="inherit" aria-label="Setting" disabled={true}>
+                <IconButton color="inherit" aria-label="Setting">
                     <SettingsIcon fontSize="large" />
                 </IconButton>
             </Toolbar>
