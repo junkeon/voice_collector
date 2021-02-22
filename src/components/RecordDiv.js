@@ -120,7 +120,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
             body: JSON.stringify(postBody)
         };
 
-        fetch(recipeUrl + '/send_audio', requestMetadata)
+        fetch(recipeUrl + 'send_audio', requestMetadata)
             .then(res => res.json())
     }
 

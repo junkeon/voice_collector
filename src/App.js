@@ -10,7 +10,6 @@ import DisplayList from './components/DisplayList'
 import Login from './components/Login'
 
 
-
 export default function SimpleCard() {
   const classes = useStyles();
 
@@ -26,7 +25,7 @@ export default function SimpleCard() {
   const recipeUrl = "http://0.0.0.0:5024/"
 
   function onClick() {
-    if(user.length === 0 || passwd !== '1234'){
+    if (user.length === 0 || passwd !== '1234') {
       alert('Wrong user info')
       return
     }
@@ -36,28 +35,33 @@ export default function SimpleCard() {
   }
 
   function showContent() {
-    if (mode === 'login') {
-      return (<Login classes={classes}
-        user={user} passwd={passwd} userInfo={userInfo}
-        setUserInfo={setUserInfo}
-        onClick={onClick} />)
-    } else if (mode === 'show') {
-      return (<DisplayList
-        classes={classes}
-        sentList={sentList}
-        onClick={(id) => {
-          setIndex(id)
-          setMode('record')
-        }} />)
-    } else if (mode === 'record') {
-      return (<Record
-        recipeUrl={recipeUrl}
-        classes={classes}
-        sentList={sentList}
-        setSentList={setSentList}
-        index={index}
-        setIndex={setIndex}
-        user={user} />)
+    switch (mode) {
+      case 'login':
+        return (<Login classes={classes}
+          user={user} passwd={passwd} userInfo={userInfo}
+          setUserInfo={setUserInfo}
+          onClick={onClick} />)
+
+      case 'show':
+        return (<DisplayList
+          classes={classes}
+          sentList={sentList}
+          onClick={(id) => {
+            setIndex(id)
+            setMode('record')
+          }} />)
+
+      case 'record':
+        return (<Record
+          recipeUrl={recipeUrl}
+          classes={classes}
+          sentList={sentList}
+          setSentList={setSentList}
+          index={index}
+          setIndex={setIndex}
+          user={user} />)
+      default:
+        break;
     }
   }
 
@@ -65,6 +69,7 @@ export default function SimpleCard() {
     const postBody = {
       'user': user
     }
+
     const requestMetadata = {
       method: 'POST',
       headers: {
@@ -73,7 +78,7 @@ export default function SimpleCard() {
       body: JSON.stringify(postBody)
     };
 
-    fetch(recipeUrl + '/get_text', requestMetadata)
+    fetch(recipeUrl + 'get_text', requestMetadata)
       .then(res => res.json())
       .then(res => {
         const tmpList = []
