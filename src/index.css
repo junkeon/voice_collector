@@ -20,5 +20,10 @@ code {
   -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
-  display: none;
+  width: 5px;
+  background: none;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(25, 36, 134);
+  opacity: .8;
 }

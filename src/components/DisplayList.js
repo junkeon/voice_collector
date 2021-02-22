@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,11 +9,11 @@ import { ListSubheader, Typography } from '@material-ui/core';
 
 function ListItemLink({ item, onClick }) {
     return (
-        <ListItem button style={{ marginTop: 5 }} onClick={()=>{onClick(item.id)}}>
+        <ListItem button style={{ marginTop: 3 }} onClick={()=>{onClick(item.id)}}>
             <ListItemIcon>
                 {item['done'] ? <MicIcon color='primary' /> : <MicIcon color='disabled' />}
             </ListItemIcon>
-            <Typography noWrap={true}>{item['text']}</Typography>
+            <Typography variant="h5" noWrap={true}>{item['text']}</Typography>
         </ListItem>
     );
 }

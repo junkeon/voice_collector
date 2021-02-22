@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     left: "50%",
     transform: "translateY(-40%) translateX(-50%)",
 
-    width: 600,
+    width: 1000,
     height: 600,
     borderRadius: 10,
     backgroundColor: '#fcfdfc',
@@ -15,14 +15,14 @@ const useStyles = makeStyles({
   appbar: {
     position: 'relative',
     alignItems: 'center',
-    width:600,
+    width:1000,
   },
   toolbar: {
     height: 80,
   },
   barTitle: {
-    marginLeft:100,
-    marginRight:100,
+    marginLeft:300,
+    marginRight:300,
   },
   cardContent: {
     position:"absolute",
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     color: "#757381",    
   },
   parSentence: {
-    height: 230,
+    height: 200,
     borderTop: "5px solid #757381",
     borderBottom: "5px solid #757381",
     marginTop: 10,
@@ -61,13 +61,13 @@ const useStyles = makeStyles({
     // position: 'relative',
     textAlign: "center",
     height: 120,
-    // marginTop: 10,
+    marginTop: 10,
   },
   status: {
     position: 'relative',
     width: "100%",
-    top: "50%",
-    transform: "translateY(-50%)",
+    top: "45%",
+    transform: "translateY(-55%)",
     color: "#737373"
   },
   waveform : {
@@ -80,7 +80,9 @@ const useStyles = makeStyles({
     // backgroundColor: "#ffffff"
   },
   control: {
-    marginTop: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
     height: 60,
     flexGrow: 1,
   },

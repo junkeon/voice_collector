@@ -9,9 +9,8 @@ import Record from './components/RecordDiv'
 import DisplayList from './components/DisplayList'
 import Login from './components/Login'
 
-
-
 export default function SimpleCard() {
+  
   const classes = useStyles();
 
   const [sentList, setSentList] = useState([])
@@ -22,8 +21,8 @@ export default function SimpleCard() {
   const [userInfo, setUserInfo] = useState({ user: '', passwd: '' })
   const { user, passwd } = userInfo
 
-  // const recipeUrl = "http://192.168.153.20:5024/"
-  const recipeUrl = "http://0.0.0.0:5024/"
+  const recipeUrl = "https://222.122.50.196:7584"
+  // const recipeUrl = '0.0.0.0:7584'
 
   function onClick() {
     if(user.length === 0 || passwd !== '1234'){

@@ -129,6 +129,8 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
             media.startRecording();
             setIconColor('secondary');
             setStatusMSG('Recording...')
+            setStatusVis('block')
+            setWavVis('none')
             setDecState({ 'color': 'disabled', 'state': true })
             setIncState({ 'color': 'disabled', 'state': true })
         } else {
@@ -184,7 +186,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
                 }}>
             <div className={classes.index}>
                 <Typography variant="h5">
-                    {sentList[index].done ? 'Done - ' : 'Undone - '}
+                    {sentList[index].done ? <span style={{color:"#1232ff"}}>Done - </span> : ''}   
                     {index + 1} / {totalNumber}
                 </Typography>
             </div>
