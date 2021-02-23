@@ -8,6 +8,8 @@ import MicIcon from '@material-ui/icons/Mic';
 import { useReactMediaRecorder } from "react-media-recorder";
 import WaveSurfer from "wavesurfer.js";
 
+import levenshtein from 'js-levenshtein'
+
 function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, user }) {
 
     const media = useReactMediaRecorder({ audio: true, onStop: (a, b) => { setblob(b) } })
@@ -30,7 +32,7 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
 
     useEffect(() => {
         if (waveformRef.current && blob !== '') {
-            blobToBase64(recipeUrl, blob);
+            blobToBase64_asr(recipeUrl, blob);
             const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
                 waveColor: 'blue',
@@ -51,15 +53,24 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
 
     useEffect(() => {
         if (text !== '') {
-            var check = window.confirm('음성 인식 결과 : \n' + text)
+            const target = sentList[index].text.replace(/[^가-힣]/g, '')
+            const pred = text.replace(/[^가-힣]/g, '')
+            const dist = levenshtein(target, pred)
+            const score = Math.round(1000 - dist / target.length * 1000) / 10
+
+            console.log(`${target} ${pred} ${dist} ${score}`)
+            const check = window.confirm(`문장 읽기 점수 : ${score}\n다음으로 넘어가시겠습니까?`)
             if (check) {
                 setSentList(sentList.map(item => item.id === index ? { ...item, done: true } : item))
                 changeSent('+')
+                blobToBase64_res(recipeUrl, blob, text, score)
             }
+            setText('')
         }
         setStatusMSG("Ready to record")
         setStatusVis('block')
         setWavVis('none')
+        
     }, [text])
 
     useEffect(() => {
@@ -76,14 +87,24 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
         }
     }, [index])
 
-    function blobToBase64(recipeUrl, blob) {
-        console.log('Connect to server...')
+    function blobToBase64_asr(recipeUrl, blob) {
+        console.log('Connect to server... asr')
         var reader = new FileReader();
         reader.onload = function () {
             var dataUrl = reader.result;
             var base64 = dataUrl.split(',')[1];
             sendToOffline(base64);
-            getScript(recipeUrl, base64, index, user, sentList[index].text)
+        };
+        reader.readAsDataURL(blob);
+    };
+
+    function blobToBase64_res(recipeUrl, blob, text, score) {
+        console.log('Connect to server... result')
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataUrl = reader.result;
+            var base64 = dataUrl.split(',')[1];
+            sentAudio(recipeUrl, base64, index, user, sentList[index].text, text, score)
         };
         reader.readAsDataURL(blob);
     };
@@ -105,12 +126,14 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
         fetch(recipeUrl, requestMetadata).then(res => res.json()).then(res => setText(res.text))
     }
 
-    function getScript(recipeUrl, b64data, index, user, scp) {
+    function sentAudio(recipeUrl, b64data, index, user, scp, asr, score) {
         const postBody = {
             'user': user,
             'blob': b64data,
             'index': index,
             'sent': scp,
+            'asr' : asr,
+            'score' : score
         }
         const requestMetadata = {
             method: 'POST',
@@ -180,8 +203,8 @@ function Record({ recipeUrl, classes, sentList, setSentList, index, setIndex, us
                         changeSent('-')
                     } else if(e.key === 'ArrowRight'){
                         changeSent('+')
-                    } else if(e.key === ' '){
-                        record()
+                    // } else if(e.key === ' '){
+                    //     record()
                     }
                 }}>
             <div className={classes.index}>
